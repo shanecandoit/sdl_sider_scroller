@@ -61,7 +61,7 @@ int main ( int argc, char** argv )
     Window window;
     //SDL_Surface* screen = new_win();
 
-    SDL_Surface* bmp = load_img("cb.bmp");
+    SDL_Surface* bmp = load_img("art\\cb.bmp");
 
     // centre the bitmap on screen
     SDL_Rect dstrect;
