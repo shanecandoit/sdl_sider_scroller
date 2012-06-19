@@ -4,4 +4,4 @@ public:
 	Actor();
 	~Actor();
 private:
-}
+};

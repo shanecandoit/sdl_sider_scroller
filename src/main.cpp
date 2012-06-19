@@ -5,7 +5,6 @@
 #include <SDL.h>
 using namespace std;
 
-#define TILE 64
 
 #include "Rect.h"
 
@@ -20,7 +19,7 @@ public:
             exit(2);
         }
     }
-    getScreen(){return screen;}
+    SDL_Surface* getScreen(){return screen;}
 private:
     SDL_Surface* screen;
 };
@@ -99,7 +98,7 @@ int main ( int argc, char** argv )
         // DRAWING STARTS HERE
 
         // clear screen
-        SDL_FillRect(window.getScreen(), 0, SDL_MapRGB(screen->format, 0, 0, 0));
+        SDL_FillRect(window.getScreen(), 0, SDL_MapRGB(window.getScreen()->format, 0, 0, 0));
 
         // draw bitmap
         SDL_BlitSurface(bmp, 0, window.getScreen(), &dstrect);
