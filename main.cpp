@@ -7,14 +7,22 @@ using namespace std;
 
 #define TILE 64
 
-#include "Rect.cpp"
+#include "Rect.h"
 
-//map<string,int> fileRefs;
-// lets use an enum of the images
-class Image{
+
+class Window{
 public:
-    //enum files{ CB };
+    Window(){
+        int opts=SDL_HWSURFACE|SDL_DOUBLEBUF;
+        SDL_Surface* screen = SDL_SetVideoMode(800, 600, 32,opts);
+        if ( !screen ){
+            printf("Unable to set 640x480 video: %s\n", SDL_GetError());
+            exit(2);
+        }
+    }
+    getScreen(){return screen;}
 private:
+    SDL_Surface* screen;
 };
 
 void sdl_init(){
@@ -51,14 +59,15 @@ SDL_Surface* load_img( string filename ) {
 
 int main ( int argc, char** argv )
 {
-    SDL_Surface* screen = new_win();
+    Window window;
+    //SDL_Surface* screen = new_win();
 
     SDL_Surface* bmp = load_img("cb.bmp");
 
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = (screen->w - bmp->w) / 2;
-    dstrect.y = (screen->h - bmp->h) / 2;
+    dstrect.x = (window.getScreen()->w - bmp->w) / 2;
+    dstrect.y = (window.getScreen()->h - bmp->h) / 2;
 
     // program main loop
     bool done = false;
@@ -90,15 +99,15 @@ int main ( int argc, char** argv )
         // DRAWING STARTS HERE
 
         // clear screen
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+        SDL_FillRect(window.getScreen(), 0, SDL_MapRGB(screen->format, 0, 0, 0));
 
         // draw bitmap
-        SDL_BlitSurface(bmp, 0, screen, &dstrect);
+        SDL_BlitSurface(bmp, 0, window.getScreen(), &dstrect);
 
         // DRAWING ENDS HERE
 
         // finally, update the screen :)
-        SDL_Flip(screen);
+        SDL_Flip(window.getScreen());
     } // end main loop
 
     // free loaded bitmap
